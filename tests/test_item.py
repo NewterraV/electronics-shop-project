@@ -16,6 +16,7 @@ def test_item(get_example):
     assert get_example.name == 'Смартфон'
     assert get_example.price == 10000
     assert get_example.quantity == 20
+    assert len(get_example.all) == 1
 
 
 def test_calculate_total_price(get_example):
