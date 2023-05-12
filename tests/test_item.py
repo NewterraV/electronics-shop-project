@@ -20,3 +20,8 @@ def test_item(get_example):
 
 def test_calculate_total_price(get_example):
     assert get_example.calculate_total_price() == 200000.0
+
+
+def test_apply_discount(get_example):
+    get_example.apply_discount()
+    assert get_example.price == 10000
