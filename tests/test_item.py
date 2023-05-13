@@ -1,12 +1,24 @@
 from src.item import Item
 import pytest
 
+from src.cnst import PATH_ITEMS
+
 """Тесты модуля item.py."""
 
 
 @pytest.fixture
 def get_example():
     return Item("Смартфон", 10000, 20)
+
+
+@pytest.fixture
+def get_item_class():
+    return Item.instantiate_from_csv()
+
+
+@pytest.fixture
+def pathfile():
+    return PATH_ITEMS
 
 
 def test_item(get_example):
@@ -37,3 +49,8 @@ def test_set_name(get_example):
     assert get_example.name == 'Ноутбук'
     get_example.name = 'Что-то странное'
     assert get_example.name == 'Ноутбук'
+
+
+def test_instantiate_from_csv(get_item_class):
+
+    assert len(Item.all) == 5

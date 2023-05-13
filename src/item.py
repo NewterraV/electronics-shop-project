@@ -1,3 +1,7 @@
+from csv import DictReader
+from src.cnst import PATH_ITEMS
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -50,8 +54,25 @@ class Item:
         :param name: Новое значение.
         :return: None
         """
+        try:
+            if len(name) > 10:
+                raise ValueError
 
-        if len(name) <= 10:
             self.__name = name.title()
 
-        print('Количество символов больше 10, значение не присвоено')
+        except ValueError:
+            print('Exception: Длина наименования товара превышает 10 символов.')
+
+    @classmethod
+    def instantiate_from_csv(cls):
+        cls.all = []
+        try:
+            with open(PATH_ITEMS, 'r') as f:
+                items = DictReader(f)
+                for i in items:
+                    Item(i['name'], float(i['price']), int(i['quantity']))
+            return True
+
+        except FileNotFoundError:
+            print(f'Exception: отсутствует файл по пути: {PATH_ITEMS}')
+            return False
