@@ -61,18 +61,40 @@ class Item:
             self.__name = name.title()
 
         except ValueError:
-            print('Exception: Длина наименования товара превышает 10 символов.')
+            print('ValueError: Длина наименования товара превышает 10 символов.')
+            return False
 
     @classmethod
     def instantiate_from_csv(cls):
         cls.all = []
         try:
-            with open(PATH_ITEMS, 'r') as f:
+            with open(PATH_ITEMS, 'r', encoding="windows-1251") as f:
                 items = DictReader(f)
                 for i in items:
                     Item(i['name'], float(i['price']), int(i['quantity']))
             return True
 
         except FileNotFoundError:
-            print(f'Exception: отсутствует файл по пути: {PATH_ITEMS}')
+            print('FileNotFoundError: отсутствует файл по пути: {PATH_ITEMS}')
+            return False
+
+    @staticmethod
+    def string_to_number(number) -> [int, bool]:
+        """
+        Функция принимает аргумент и стремится преобразовать его в int. В случае неудачи возвращает False
+        :param number: аргумент
+        :return: int при успехе, bool при неудаче.
+        """
+        try:
+            if '.' in number:
+                return int(float(number))
+
+            return int(number)
+
+        except ValueError:
+            print('Значение "number" не может быть преобразовано')
+            return False
+
+        except TypeError:
+            print('Значение "number" не является строкой')
             return False
