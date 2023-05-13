@@ -26,3 +26,14 @@ def test_calculate_total_price(get_example):
 def test_apply_discount(get_example):
     get_example.apply_discount()
     assert get_example.price == 10000
+
+
+def test_name(get_example):
+    assert get_example.name == 'Смартфон'
+
+
+def test_set_name(get_example):
+    get_example.name = 'ноутбук'
+    assert get_example.name == 'Ноутбук'
+    get_example.name = 'Что-то странное'
+    assert get_example.name == 'Ноутбук'

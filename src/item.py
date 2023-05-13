@@ -14,7 +14,7 @@ class Item:
         :param quantity: Количество товара в магазине.
         """
 
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
@@ -35,3 +35,23 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
+
+    @property
+    def name(self) -> str:
+        """
+        Возвращает наименование товара.
+        """
+        return self.__name
+
+    @name.setter
+    def name(self, name: str) -> [None, False]:
+        """
+        Используется при присваивании значения name. Если символов больше 10, значение не присваивается.
+        :param name: Новое значение.
+        :return: None
+        """
+
+        if len(name) <= 10:
+            self.__name = name.title()
+
+        print('Количество символов больше 10, значение не присвоено')
