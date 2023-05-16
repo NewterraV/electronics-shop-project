@@ -67,3 +67,13 @@ def test_instantiate_from_csv(get_item_class):
 def test_string_to_number(get_example, value, result):
     """TestCase string_to_number"""
     assert Item.string_to_number(value) == result
+
+
+def test_repr(get_example):
+    """TestCase __repr__"""
+    assert repr(get_example) == "Item('Смартфон', 10000, 20)"
+
+
+def test_str(get_example):
+    """TestCase __str__"""
+    assert str(get_example) == 'Смартфон'
