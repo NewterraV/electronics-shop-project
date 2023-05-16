@@ -24,7 +24,10 @@ class Item:
         Item.all.append(self)
 
     def __repr__(self):
-        return f'\nself.name={self.name}\nself.prise={self.price}\nself.quantity={self.quantity}\n'
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f'{self.__name}'
 
     def calculate_total_price(self) -> float:
         """
