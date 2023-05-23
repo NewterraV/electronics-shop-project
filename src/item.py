@@ -29,6 +29,12 @@ class Item:
     def __str__(self):
         return f'{self.__name}'
 
+    def __add__(self, other):
+        """Функция проверят принадлежность экземпляров класса и в случае успеха производит сложение"""
+        if issubclass(other.__class__, self.__class__):
+            return int(other.quantity) + int(self.quantity)
+        raise ValueError('Объект не принадлежит классу Init')
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -57,18 +63,15 @@ class Item:
         :param name: Новое значение.
         :return: None
         """
-        try:
-            if len(name) > 10:
-                raise ValueError
 
-            self.__name = name.title()
+        if len(name) > 10:
+            raise ValueError('ValueError: Длина наименования товара превышает 10 символов.')
 
-        except ValueError:
-            print('ValueError: Длина наименования товара превышает 10 символов.')
-            return False
+        self.__name = name.title()
 
     @classmethod
     def instantiate_from_csv(cls):
+        """Класс метод инициализирующий экземпляры класса из файла .csv"""
         cls.all = []
         try:
             with open(PATH_ITEMS, 'r', encoding="windows-1251") as f:

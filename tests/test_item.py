@@ -12,6 +12,11 @@ def get_example():
 
 
 @pytest.fixture
+def get_example_2():
+    return Item("Телефон", 10000, 10)
+
+
+@pytest.fixture
 def get_item_class():
     return Item.instantiate_from_csv()
 
@@ -53,8 +58,11 @@ def test_set_name(get_example):
     """TestCase2 name"""
     get_example.name = 'ноутбук'
     assert get_example.name == 'Ноутбук'
-    get_example.name = 'Что-то странное'
-    assert get_example.name == 'Ноутбук'
+    try:
+        get_example.name = 'Что-то странное'
+        assert get_example.name == 'Ноутбук'
+    except ValueError:
+        assert get_example.name == 'Ноутбук'
 
 
 def test_instantiate_from_csv(get_item_class):
@@ -63,7 +71,7 @@ def test_instantiate_from_csv(get_item_class):
 
 
 @pytest.mark.parametrize('value, result', [['5', 5], ['5.0', 5], ['5.5', 5], ['пя.ть', False], [[1, 2, 3], False],
-                         [{'five': 5}, False], [(1, 2, 3), False], [{1, 2, 3}, False]])
+                                           [{'five': 5}, False], [(1, 2, 3), False], [{1, 2, 3}, False]])
 def test_string_to_number(get_example, value, result):
     """TestCase string_to_number"""
     assert Item.string_to_number(value) == result
@@ -77,3 +85,7 @@ def test_repr(get_example):
 def test_str(get_example):
     """TestCase __str__"""
     assert str(get_example) == 'Смартфон'
+
+
+def test_add(get_example, get_example_2):
+    assert get_example_2 + get_example == 30
