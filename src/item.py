@@ -57,18 +57,15 @@ class Item:
         :param name: Новое значение.
         :return: None
         """
-        try:
-            if len(name) > 10:
-                raise ValueError
 
-            self.__name = name.title()
+        if len(name) > 10:
+            raise ValueError('ValueError: Длина наименования товара превышает 10 символов.')
 
-        except ValueError:
-            print('ValueError: Длина наименования товара превышает 10 символов.')
-            return False
+        self.__name = name.title()
 
     @classmethod
     def instantiate_from_csv(cls):
+        """Класс метод инициализирующий экземпляры класса из файла .csv"""
         cls.all = []
         try:
             with open(PATH_ITEMS, 'r', encoding="windows-1251") as f:
