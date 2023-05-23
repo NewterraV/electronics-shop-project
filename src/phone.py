@@ -22,6 +22,6 @@ class Phone(Item):
         :param value: Новое значение
         :return: None или исключение
         """
-        if value <= 0:
+        if value <= 0 or type(value) != int:
             raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля.')
         self.__number_of_sim = value

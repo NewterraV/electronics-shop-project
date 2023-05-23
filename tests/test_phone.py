@@ -34,6 +34,10 @@ def test_number_of_sim(phone_exmpl):
 
     try:
         phone_exmpl[1].number_of_sim = 0
+    except ValueError:
+        assert phone_exmpl[1].number_of_sim == 1
 
+    try:
+        phone_exmpl[1].number_of_sim = 0.3
     except ValueError:
         assert phone_exmpl[1].number_of_sim == 1
