@@ -1,12 +1,12 @@
 import pytest
 
-from src.keyboard import Keyboard
+from src.keyboard import KeyBoard
 
 
 @pytest.fixture
 def get_exmpls():
-    return [Keyboard('Dexp', 500, 68),
-            Keyboard('4tech', 2650, 15)]
+    return [KeyBoard('Dexp', 500, 68),
+            KeyBoard('4tech', 2650, 15)]
 
 
 def test_keyboard(get_exmpls):

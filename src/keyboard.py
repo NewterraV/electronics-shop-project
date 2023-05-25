@@ -12,7 +12,7 @@ class MixinChangeLang:
         return self
 
 
-class Keyboard(MixinChangeLang, Item):
+class KeyBoard(MixinChangeLang, Item):
 
     def __init__(self, name, price, quantity):
         super().__init__(name, price, quantity)
