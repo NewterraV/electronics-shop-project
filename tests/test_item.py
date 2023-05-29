@@ -65,9 +65,12 @@ def test_set_name(get_example):
         assert get_example.name == 'Ноутбук'
 
 
-def test_instantiate_from_csv(get_item_class):
+def test_instantiate_from_csv():
     """TestCase instantiate_from_csv"""
+    Item.instantiate_from_csv()
     assert len(Item.all) == 5
+    assert Item.instantiate_from_csv('item.csv') is False
+    assert Item.instantiate_from_csv('items_test.csv') is False
 
 
 @pytest.mark.parametrize('value, result', [['5', 5], ['5.0', 5], ['5.5', 5], ['пя.ть', False], [[1, 2, 3], False],

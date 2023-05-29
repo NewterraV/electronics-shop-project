@@ -1,5 +1,6 @@
 from csv import DictReader
 from src.cnst import PATH_ITEMS
+from src.software_exceptions import InstantiateCSVError
 
 
 class Item:
@@ -70,18 +71,29 @@ class Item:
         self.__name = name.title()
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, file_path=PATH_ITEMS):
         """Класс метод инициализирующий экземпляры класса из файла .csv"""
         cls.all = []
         try:
-            with open(PATH_ITEMS, 'r', encoding="windows-1251") as f:
-                items = DictReader(f)
-                for i in items:
-                    Item(i['name'], float(i['price']), int(i['quantity']))
-            return True
+            with open(file_path, 'r', encoding="windows-1251") as f:
+                try:
+                    items = DictReader(f)
+                    for i in items:
+                        Item(i['name'], float(i['price']), int(i['quantity']))
+
+                except KeyError:
+                    raise InstantiateCSVError
+                # дополнительная проверка на валидность данных
+                else:
+                    if not cls.all:
+                        raise InstantiateCSVError
 
         except FileNotFoundError:
-            print('FileNotFoundError: отсутствует файл по пути: {PATH_ITEMS}')
+            print(f'отсутствует файл по пути: {file_path}')
+            return False
+
+        except InstantiateCSVError:
+            print(InstantiateCSVError(file_path))
             return False
 
     @staticmethod
